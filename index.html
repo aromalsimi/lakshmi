@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Lakshmi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --bg: #faf8f4;
+    --text: #2e2b26;
+    --muted: #8a8378;
+    --accent: #b97a76;
+    --accent-soft: #e9d9d3;
+    --line: #ddd5c8;
+    --envelope-size: 74px;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'EB Garamond', serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 6rem 1.5rem 5rem;
+    position: relative;
+  }
+
+  /* ---------- doodles ---------- */
+  .doodle {
+    position: absolute;
+    stroke: var(--accent);
+    fill: none;
+    stroke-width: 1;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .doodle--branch {
+    top: 18px;
+    left: -10px;
+    width: 130px;
+    transform: rotate(-8deg);
+  }
+  .doodle--star {
+    top: 40px;
+    right: 10px;
+    width: 46px;
+    opacity: 0.4;
+  }
+  .doodle--moon {
+    bottom: 30px;
+    left: 6px;
+    width: 60px;
+    opacity: 0.3;
+  }
+
+  /* ---------- hero ---------- */
+  header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .eyebrow {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    margin: 0 0 0.5rem;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(3rem, 9vw, 4.6rem);
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+
+  .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--accent);
+    margin-top: 0.6rem;
+  }
+
+  .rule {
+    width: 60px;
+    height: 1px;
+    background: var(--line);
+    margin: 2.2rem auto;
+  }
+
+  .intro {
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 620px;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .intro p {
+    margin: 0 0 1.2rem;
+  }
+
+  .signoff {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--accent);
+    text-align: right;
+    margin-top: 1.5rem;
+  }
+
+  /* ---------- envelopes ---------- */
+  .instructions {
+    text-align: center;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    font-size: 1.05rem;
+  }
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.6rem 1.2rem;
+  }
+
+  .envelope-btn {
+    width: var(--envelope-size);
+  }
+
+  .envelope-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'EB Garamond', serif;
+    color: var(--text);
+    transition: transform 0.2s ease;
+  }
+
+  .envelope-btn:hover {
+    transform: translateY(-3px);
+  }
+
+  .envelope-btn:focus-visible {
+    outline: 1.5px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  .envelope-btn svg {
+    width: var(--envelope-size);
+    height: calc(var(--envelope-size) * 0.72);
+    stroke: var(--text);
+    stroke-width: 1.3;
+    fill: none;
+    transition: stroke 0.2s ease;
+  }
+
+  .envelope-btn:hover svg {
+    stroke: var(--accent);
+  }
+
+  .shuffle-row {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .shuffle-btn {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--muted);
+    background: none;
+    border: none;
+    border-bottom: 1px solid transparent;
+    cursor: pointer;
+    padding: 0 0 2px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .shuffle-btn:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .shuffle-btn svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.6;
+  }
+
+  /* ---------- modal ---------- */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(46, 43, 38, 0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    z-index: 10;
+  }
+
+  .overlay.visible {
+    display: flex;
+  }
+
+  .card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    max-width: 460px;
+    width: 100%;
+    padding: 2.6rem 2.2rem;
+    position: relative;
+    text-align: center;
+  }
+
+  .card .heart {
+    width: 26px;
+    height: 26px;
+    stroke: var(--accent);
+    fill: none;
+    stroke-width: 1.4;
+    margin-bottom: 1.1rem;
+  }
+
+  .card .reason {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .card .close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-family: 'EB Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--muted);
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .card .close:hover {
+    color: var(--accent);
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 5rem;
+    color: var(--muted);
+    font-style: italic;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    .page {
+      padding: 4rem 1.2rem 3.5rem;
+    }
+    :root {
+      --envelope-size: 60px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .envelope-btn {
+      transition: none;
+    }
+  }
+
+  /* ---------- desktop: fit everything on one screen, no scrollbar ---------- */
+  @media (min-width: 769px) and (orientation: landscape) {
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .page {
+      height: 100vh;
+      max-width: 1100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2vh 3vw;
+    }
+
+    header {
+      margin-bottom: 0;
+    }
+
+    .eyebrow {
+      font-size: clamp(0.8rem, 1.4vh, 1.05rem);
+      margin: 0 0 0.3vh;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 6vh, 3.6rem);
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 1.8vh, 1.3rem);
+      margin-top: 0.4vh;
+    }
+
+    .rule {
+      margin: 0.6vh auto;
+    }
+
+    .intro {
+      font-size: clamp(0.95rem, 1.6vh, 1.15rem);
+      max-width: 700px;
+    }
+
+    .intro p {
+      margin: 0 0 0.4vh;
+    }
+
+    .signoff {
+      font-size: clamp(1rem, 1.7vh, 1.25rem);
+      margin-top: 0.4vh;
+    }
+
+    .instructions {
+      font-size: clamp(0.85rem, 1.3vh, 1rem);
+      margin-bottom: 0.5vh;
+    }
+
+    .shuffle-row {
+      margin-bottom: 0.6vh;
+    }
+
+    .shuffle-btn {
+      font-size: clamp(0.85rem, 1.3vh, 1rem);
+    }
+
+    :root {
+      --envelope-size: clamp(38px, 5.4vh, 60px);
+    }
+
+    .grid {
+      gap: 0.7vh 0.8vw;
+    }
+
+    footer {
+      margin-top: 0.7vh;
+      font-size: clamp(0.75rem, 1.1vh, 0.9rem);
+    }
+
+    .doodle--branch {
+      width: 90px;
+    }
+
+    .doodle--star {
+      width: 32px;
+    }
+
+    .doodle--moon {
+      width: 42px;
+    }
+  }
+
+  /* ---------- passcode gate ---------- */
+  .gate {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: 1.5rem;
+  }
+
+  .gate-card {
+    text-align: center;
+    max-width: 320px;
+    width: 100%;
+  }
+
+  .gate-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 1.15rem;
+    margin: 0 0 1.3rem;
+  }
+
+  #gate-input {
+    display: block;
+    width: 100%;
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    text-align: center;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    background: var(--bg);
+    color: var(--text);
+    margin-bottom: 0.9rem;
+  }
+
+  #gate-input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  #gate-submit {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--bg);
+    background: var(--accent);
+    border: none;
+    padding: 0.55rem 1.5rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  #gate-submit:hover {
+    opacity: 0.85;
+  }
+
+  .gate-error {
+    display: none;
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-top: 0.9rem;
+  }
+
+  .gate-error.visible {
+    display: block;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <p class="gate-label">this page is just for you</p>
+    <input type="password" id="gate-input" placeholder="enter the passcode" autocomplete="off" />
+    <button id="gate-submit">open</button>
+    <p class="gate-error" id="gate-error">that's not quite it, try again</p>
+  </div>
+</div>
+
+<div class="page" id="page-content" style="display:none;">
+
+  <!-- soft doodles, decorative only -->
+  <svg class="doodle doodle--branch" viewBox="0 0 130 60" aria-hidden="true">
+    <path d="M2 40 Q 30 10, 60 25 T 128 15" />
+    <path d="M20 32 q 6 -10 14 -6" />
+    <path d="M45 22 q 6 -10 14 -6" />
+    <path d="M75 20 q 6 -10 14 -6" />
+  </svg>
+
+  <svg class="doodle doodle--star" viewBox="0 0 40 40" aria-hidden="true">
+    <path d="M20 4 L23 17 L36 20 L23 23 L20 36 L17 23 L4 20 L17 17 Z" />
+  </svg>
+
+  <svg class="doodle doodle--moon" viewBox="0 0 50 50" aria-hidden="true">
+    <path d="M32 8 A18 18 0 1 0 32 42 A14 14 0 0 1 32 8 Z" />
+  </svg>
+
+  <header>
+    <p class="eyebrow">twenty-six years of you</p>
+    <h1>Lakshmi</h1>
+    <p class="subtitle">a small envelope for every reason</p>
+  </header>
+
+  <div class="rule"></div>
+
+  <div class="intro">
+    <p>This is my humble attempt at setting up a digital gift for your 26th birthday. My apologies, as Claude wrote the code for this page for me. I don't have the Sunil blood to grasp tech or the patience to learn a new skill. You'd know this better than anyone, right? :-)</p>
+    <p>But please open these envelopes when you feel like it. Each one holds one of the many reasons why I love you so much and why you are a ray of sunshine to a lot of people. Have fun and be you, umma!</p>
+    <p class="signoff">With love, always and forever, Aromal!</p>
+  </div>
+
+  <div class="rule"></div>
+
+  <p class="instructions">click on an envelope to open it</p>
+
+  <div class="shuffle-row">
+    <button class="shuffle-btn" id="shuffle-btn">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M17 3 L21 7 L17 11" />
+        <path d="M3 17 h6 a4 4 0 0 0 3.2 -1.6 L18 6 h3" />
+        <path d="M17 13 L21 17 L17 21" />
+        <path d="M3 7 h6 a4 4 0 0 1 3.2 1.6 L13.5 10" />
+      </svg>
+      shuffle the envelopes
+    </button>
+  </div>
+
+  <div class="grid" id="envelope-grid"></div>
+
+  <footer>open one, open them all, open one again on a hard day</footer>
+
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="card">
+    <button class="close" id="close-btn" aria-label="Close">&times;</button>
+    <svg class="heart" viewBox="0 0 24 22" aria-hidden="true">
+      <path d="M12 20.5 C 6 15.8, 1.5 11.9, 1.5 7.4 C 1.5 4.2, 3.9 1.8, 7 1.8 C 9 1.8, 10.8 2.9, 12 4.6 C 13.2 2.9, 15 1.8, 17 1.8 C 20.1 1.8, 22.5 4.2, 22.5 7.4 C 22.5 11.9, 18 15.8, 12 20.5 Z" />
+    </svg>
+    <p class="reason" id="modal-reason"></p>
+  </div>
+</div>
+
+<script>
+  // ---- passcode gate ----
+  // Change the word below to whatever passcode you want to give her.
+  // It's not case-sensitive (e.g. "Lakshmi26" and "lakshmi26" both work).
+  const GATE_PASSCODE = "lakshmi26";
+  const GATE_KEY = 'lakshmi-gate-unlocked';
+
+  const gate = document.getElementById('gate');
+  const gateInput = document.getElementById('gate-input');
+  const gateSubmit = document.getElementById('gate-submit');
+  const gateError = document.getElementById('gate-error');
+  const pageContent = document.getElementById('page-content');
+
+  function unlockGate() {
+    gate.style.display = 'none';
+    pageContent.style.display = '';
+  }
+
+  if (localStorage.getItem(GATE_KEY) === 'true') {
+    unlockGate();
+  }
+
+  function tryUnlock() {
+    if (gateInput.value.trim().toLowerCase() === GATE_PASSCODE.toLowerCase()) {
+      localStorage.setItem(GATE_KEY, 'true');
+      unlockGate();
+    } else {
+      gateError.classList.add('visible');
+    }
+  }
+
+  gateSubmit.addEventListener('click', tryUnlock);
+  gateInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') tryUnlock();
+  });
+
+  // ---- the 26 reasons, in order ----
+  // Edit the text inside the quotes below to change a reason.
+  const reasons = [
+    "Smile, comforting, radiant and at times done.",
+    "A heap of empathy.",
+    "Assurance, on good days and bad.",
+    "Space to grow within, also heave at odd times.",
+    "Knowledge, the little ones, the big ones, mostly the little ones.",
+    "Walking computer, Linux and many things technology.",
+    "Perseverance of the strongest kind.",
+    "A wonderful, beautiful and gorgeous woman.",
+    "Intellectual discourse and other conversations.",
+    "Minority advocacy, inclusion and community.",
+    "Passionate selflessness, often misunderstood by none other than.",
+    "Comfort, a call, email or a ticket away.",
+    "My first acceptance of myself, the truest ally and one of the biggest hopes towards sustenance.",
+    "Constant efforts to cook meals, serve and silly shenanigans around it.",
+    "Best (one of the?) walking suggestion provider; movies, series and books.",
+    "Courage, the philosophical kind, also the mighty woman.",
+    "Low maintenance, not the best quality, but easily adaptable, also flexible.",
+    "Perfect train company.",
+    "A ride offer, scooter or a metro to station.",
+    "Walking companion, always, despite physical limitations.",
+    "Anxious planner, cutesy and fun, yet spirals.",
+    "Existence gratitude, always.",
+    "Exhausted, done, yet navigating, for the longest time.",
+    "Roommate, sporadic vibrance and random abundance.",
+    "Perfection, maybe closest with limited competition.",
+    "Happy birthday!"
+  ];
+
+  const grid = document.getElementById('envelope-grid');
+  const overlay = document.getElementById('overlay');
+  const modalReason = document.getElementById('modal-reason');
+  const closeBtn = document.getElementById('close-btn');
+  const shuffleBtn = document.getElementById('shuffle-btn');
+
+  const STORAGE_KEY = 'lakshmi-opened-envelopes';
+
+  function getOpened() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function markOpened(index) {
+    const opened = getOpened();
+    if (!opened.includes(index)) {
+      opened.push(index);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(opened));
+    }
+  }
+
+  function envelopeSVG() {
+    return `<svg viewBox="0 0 48 36" aria-hidden="true">
+      <rect x="1.5" y="1.5" width="45" height="33" rx="5"/>
+      <path d="M2.5 4 L24 22 L45.5 4"/>
+    </svg>`;
+  }
+
+  // order holds reason-indices; shuffling only changes the order they
+  // are drawn in, each envelope still opens its own correct reason
+  let order = reasons.map((_, i) => i);
+
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  function renderGrid() {
+    const opened = getOpened();
+    grid.innerHTML = '';
+    order.forEach((reasonIndex) => {
+      const btn = document.createElement('button');
+      btn.className = 'envelope-btn' + (opened.includes(reasonIndex) ? ' opened' : '');
+      btn.setAttribute('aria-label', 'Open a reason');
+      btn.dataset.reasonIndex = reasonIndex;
+      btn.innerHTML = envelopeSVG();
+      btn.addEventListener('click', () => openEnvelope(reasonIndex, btn));
+      grid.appendChild(btn);
+    });
+  }
+
+  renderGrid();
+
+  // shuffles the order, then animates each envelope sliding from its
+  // old spot to its new spot (a simple FLIP animation)
+  function shuffleWithAnimation() {
+    const items = Array.from(grid.children);
+    const firstRects = new Map();
+    items.forEach((el) => {
+      firstRects.set(el.dataset.reasonIndex, el.getBoundingClientRect());
+    });
+
+    order = shuffle(order.slice());
+
+    // move the existing elements into their new order (no re-creation,
+    // so the browser can animate the same nodes)
+    order.forEach((reasonIndex) => {
+      const el = items.find((item) => Number(item.dataset.reasonIndex) === reasonIndex);
+      grid.appendChild(el);
+    });
+
+    Array.from(grid.children).forEach((el) => {
+      const first = firstRects.get(el.dataset.reasonIndex);
+      const last = el.getBoundingClientRect();
+      const dx = first.left - last.left;
+      const dy = first.top - last.top;
+      if (dx || dy) {
+        el.style.transition = 'none';
+        el.style.transform = `translate(${dx}px, ${dy}px)`;
+        el.getBoundingClientRect(); // force reflow
+        requestAnimationFrame(() => {
+          el.style.transition = 'transform 0.5s ease';
+          el.style.transform = '';
+        });
+        setTimeout(() => {
+          el.style.transition = '';
+          el.style.transform = '';
+        }, 550);
+      }
+    });
+  }
+
+  shuffleBtn.addEventListener('click', shuffleWithAnimation);
+
+  function openEnvelope(index, btn) {
+    modalReason.textContent = reasons[index];
+    overlay.classList.add('visible');
+    btn.classList.add('opened');
+    markOpened(index);
+  }
+
+  function closeModal() {
+    overlay.classList.remove('visible');
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>
+
+</body>
+</html>
